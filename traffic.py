@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 import sys
-import tensorflow as tf
+# import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
 
@@ -67,6 +67,7 @@ def load_data(data_dir):
         for image in os.listdir(path):
             img = cv2.imread(os.path.join(data_dir, str(i), image))
             img = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
+            img = np.array(img)
             images.append(img)
             labels.append(i)
 
