@@ -1,14 +1,23 @@
 import cv2
+import csv
 import numpy as np
 import os
 import sys
 import tensorflow as tf
 
-signs = {
-    0: '20mph',
-    17: 'No Entry',
-    24: 'Road Narrows'
-}
+
+
+def load_descriptions(csv_file):
+    
+    signs = {}
+
+    with open(csv_file) as f:
+        reader = csv.reader(f)
+        header_row = next(reader)
+        for row in reader:
+            signs[int(row[0])] = row[1]
+
+    return(signs)
 
 
 def prep_images(directory):
@@ -28,6 +37,9 @@ def main():
     if len(sys.argv) < 2:
         sys.exit("Usage: python traffic_predict.py image_directory")
 
+    # Load sign dictionary
+    signs = load_descriptions('sign_descriptions.csv')
+
     # Load images
     to_test = prep_images(sys.argv[1])
 
@@ -41,7 +53,7 @@ def main():
     for array in predictions:
         prediction = np.argmax(array)
         confidence = "{:.0%}".format(array[prediction])
-        print(f'Prediction: {prediction} with confidence: {confidence}')
+        print(f'Prediction: {signs[prediction]} with confidence: {confidence}')
 
 
 if __name__ == "__main__":
