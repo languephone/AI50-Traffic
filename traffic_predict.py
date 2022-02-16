@@ -51,12 +51,12 @@ def add_text_to_images(image_list, sign_conversion):
 
     for image in image_list:
         image['complete'] = cv2.putText(
-            cv2.resize(image['array'], (300, 300)),
-            sign_conversion[image['prediction']],
-            (0, 250),
-            cv2.FONT_HERSHEY_DUPLEX,
-            0.5,
-            (0, 255, 0),
+            cv2.resize(image['array'], (150, 150)),
+            sign_conversion[image['prediction']].upper(),
+            (0, 140),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.4,
+            (0, 180, 0),
             thickness=1
         )
 
