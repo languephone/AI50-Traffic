@@ -59,8 +59,12 @@ def add_text_to_images(image_list, sign_conversion):
             (0, 255, 0),
             thickness=1
         )
-        cv2.imshow(image['name'], image['complete'])
-        k = cv2.waitKey(0)
+
+    image_bank = np.concatenate(
+        [image['complete'] for image in image_list], axis=1)
+    
+    cv2.imshow('Images', image_bank)
+    k = cv2.waitKey(0)
 
 
 def main():
