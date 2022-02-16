@@ -65,19 +65,19 @@ def add_text_to_images(image_list, sign_conversion):
 
 def main():
 
-    if len(sys.argv) < 2:
-        sys.exit("Usage: python traffic_predict.py image_directory")
+    if len(sys.argv) < 3:
+        sys.exit("Usage: python traffic_predict.py model image_directory")
 
     # Load sign dictionary
     signs = load_descriptions('sign_descriptions.csv')
 
     # Load images
-    images = prep_images(sys.argv[1])
+    images = prep_images(sys.argv[2])
     # Create list of image arrays for use with model.predict()
     image_arrays = [image['array'] for image in images]
 
     # Load existing tf model from file
-    model = tf.keras.models.load_model("best_model.h5")
+    model = tf.keras.models.load_model(sys.argv[1])
 
     # Get predictions from model
     predictions = model.predict(np.array(image_arrays))
