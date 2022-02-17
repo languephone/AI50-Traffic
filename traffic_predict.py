@@ -51,20 +51,27 @@ def add_text_to_images(image_list, sign_conversion):
 
     for image in image_list:
         image['complete'] = cv2.putText(
-            cv2.resize(image['array'], (150, 150)),
+            cv2.resize(image['array'], (175, 175)),
             sign_conversion[image['prediction']].upper(),
-            (0, 140),
+            (5, 165),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.4,
             (0, 180, 0),
             thickness=1
         )
 
-    image_bank = np.concatenate(
-        [image['complete'] for image in image_list], axis=1)
-    
-    cv2.imshow('Images', image_bank)
-    k = cv2.waitKey(0)
+    return image_list
+
+
+def create_mosaic(image_list):
+    """Create mosiac from rows of 6 images."""
+
+    final_bank = []
+    for i in range(0, len(image_list), 6):
+        row = cv2.hconcat([image['complete'] for image in image_list[i:i+6]])
+        final_bank.append(row)
+
+    return cv2.vconcat(final_bank)
 
 
 def main():
@@ -77,6 +84,7 @@ def main():
 
     # Load images
     images = prep_images(sys.argv[2])
+    
     # Create list of image arrays for use with model.predict()
     image_arrays = [image['array'] for image in images]
 
@@ -89,8 +97,14 @@ def main():
     # Add most-likely prediction and confidence level to each image dictionary
     images = add_predictions_to_images(images, predictions)
 
-    # Show prediction results for each image
-    add_text_to_images(images, signs)
+    # Superimpose text on images
+    images = add_text_to_images(images, signs)
+
+    # Create mosaic
+    mosaic = create_mosaic(images)
+
+    cv2.imshow('Images', mosaic)
+    k = cv2.waitKey(0)
 
 if __name__ == "__main__":
     main()
