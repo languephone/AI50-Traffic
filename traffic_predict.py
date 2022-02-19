@@ -13,6 +13,7 @@ TEXT_POSITION_V = -10
 
 
 def load_descriptions(csv_file):
+    """Load csv of sign descriptions into a dictionary."""
     
     signs = {}
 
@@ -20,6 +21,7 @@ def load_descriptions(csv_file):
         reader = csv.reader(f)
         header_row = next(reader)
         for row in reader:
+            # 1st column is the folder number, 2nd column is the description
             signs[int(row[0])] = row[1]
 
     return(signs)
@@ -32,7 +34,7 @@ def prep_images(directory):
 
     for image in os.listdir(directory):
         img = cv2.imread(os.path.join(directory, image))
-        # Match training image size
+        # Match training image size of 30x30
         img = cv2.resize(img, (30, 30), interpolation=cv2.INTER_AREA)
         images.append(
             {'name': image, 'array': img}
@@ -45,7 +47,10 @@ def add_predictions_to_images(image_list, predictions):
     """Adds prediction and confidence level to each image dictionary."""
 
     for index, array in enumerate(predictions):
+        # Take the highest result in the array, which is the class with the
+        # highest probability
         prediction = np.argmax(array)
+        # The confidence is the probability of the image belonging to the class
         confidence = "{:.0%}".format(array[prediction])
         image_list[index]['prediction'] = prediction
         image_list[index]['confidence'] = confidence
@@ -91,6 +96,7 @@ def create_mosaic(image_list):
 
 def main():
 
+    # Check command-line arguments
     if len(sys.argv) < 3:
         sys.exit("Usage: python traffic_predict.py model image_directory")
 
@@ -99,7 +105,7 @@ def main():
 
     # Load images
     images = prep_images(sys.argv[2])
-    
+
     # Create list of image arrays for use with model.predict()
     image_arrays = [image['array'] for image in images]
 
