@@ -5,6 +5,11 @@ import os
 import sys
 import tensorflow as tf
 
+IMG_OUTPUT_WIDTH = 180
+IMG_OUTPUT_HEIGHT = 180
+MOSAIC_LENGTH = 6
+TEXT_POSITION_H = 5
+TEXT_POSITION_V = -10
 
 
 def load_descriptions(csv_file):
@@ -54,7 +59,7 @@ def add_text_to_images(image_list, sign_conversion):
         image['complete'] = cv2.putText(
             cv2.resize(image['array'], (180, 180)),
             sign_conversion[image['prediction']].upper(),
-            (5, 170),
+            (TEXT_POSITION_H, IMG_OUTPUT_HEIGHT + TEXT_POSITION_V),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.5,
             (0, 180, 0),
@@ -68,13 +73,15 @@ def create_mosaic(image_list):
     """Create mosiac from rows of 6 images."""
 
     final_bank = []
-    # Group images into rows of 6
-    for i in range(0, len(image_list), 6):
+    # Group images into rows of MOSAIC_LENGTH
+    for i in range(0, len(image_list), MOSAIC_LENGTH):
         # Create horizontal row using hconcat function
-        h_row = [image['complete'] for image in image_list[i:i+6]]
-        # Add blank squares when the row has less than 6 images
-        while len(h_row) < 6:
-            h_row.append(np.zeros((180, 180, 3), dtype=np.uint8))
+        h_row = [image['complete'] for image in image_list[i:i+MOSAIC_LENGTH]]
+        # Add blank squares when the row has less than MOSAIC_LENGTH images
+        while len(h_row) < MOSAIC_LENGTH:
+            # Use numpy array of zeros to create blank images
+            h_row.append(np.zeros((IMG_OUTPUT_WIDTH, IMG_OUTPUT_HEIGHT, 3),
+                dtype=np.uint8))
         row = cv2.hconcat(h_row)
         final_bank.append(row)
 
