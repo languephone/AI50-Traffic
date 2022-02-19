@@ -72,6 +72,7 @@ def load_data(data_dir):
 
     return images, labels
 
+
 def get_model():
     """
     Returns a compiled convolutional neural network model. Assume that the
@@ -110,12 +111,13 @@ def get_model():
 
     # Train neural network
     model.compile(
-    optimizer="adam",
-    loss="binary_crossentropy",
-    metrics=["accuracy"]
+        optimizer="adam",
+        loss="binary_crossentropy",
+        metrics=["accuracy"]
     )
 
     return model
+
 
 if __name__ == "__main__":
     main()

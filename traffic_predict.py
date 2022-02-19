@@ -87,7 +87,7 @@ def create_mosaic(image_list):
         while len(h_row) < MOSAIC_LENGTH:
             # Use numpy array of zeros to create blank images
             h_row.append(np.zeros((IMG_OUTPUT_WIDTH, IMG_OUTPUT_HEIGHT, 3),
-                dtype=np.uint8))
+                                  dtype=np.uint8))
 
         # Append horizontal row to final_bank
         final_bank.append(cv2.hconcat(h_row))
@@ -127,6 +127,7 @@ def main():
 
     cv2.imshow('Images', mosaic)
     k = cv2.waitKey(0)
+
 
 if __name__ == "__main__":
     main()
