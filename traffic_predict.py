@@ -21,6 +21,7 @@ def load_descriptions(csv_file):
 
 
 def prep_images(directory):
+    """Read image into csv and resize to match training images."""
     
     images = []
 
@@ -51,11 +52,11 @@ def add_text_to_images(image_list, sign_conversion):
 
     for image in image_list:
         image['complete'] = cv2.putText(
-            cv2.resize(image['array'], (175, 175)),
+            cv2.resize(image['array'], (180, 180)),
             sign_conversion[image['prediction']].upper(),
-            (5, 165),
+            (5, 170),
             cv2.FONT_HERSHEY_SIMPLEX,
-            0.4,
+            0.5,
             (0, 180, 0),
             thickness=1
         )
@@ -67,8 +68,14 @@ def create_mosaic(image_list):
     """Create mosiac from rows of 6 images."""
 
     final_bank = []
+    # Group images into rows of 6
     for i in range(0, len(image_list), 6):
-        row = cv2.hconcat([image['complete'] for image in image_list[i:i+6]])
+        # Create horizontal row using hconcat function
+        h_row = [image['complete'] for image in image_list[i:i+6]]
+        # Add blank squares when the row has less than 6 images
+        while len(h_row) < 6:
+            h_row.append(np.zeros((180, 180, 3), dtype=np.uint8))
+        row = cv2.hconcat(h_row)
         final_bank.append(row)
 
     return cv2.vconcat(final_bank)
