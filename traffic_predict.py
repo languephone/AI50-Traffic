@@ -32,7 +32,8 @@ def prep_images(directory):
 
     for image in os.listdir(directory):
         img = cv2.imread(os.path.join(directory, image))
-        img = cv2.resize(img, (30, 30)) # Match training image size
+        # Match training image size
+        img = cv2.resize(img, (30, 30), interpolation=cv2.INTER_AREA)
         images.append(
             {'name': image, 'array': img}
         )
