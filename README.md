@@ -26,3 +26,15 @@ The next area of experimentation was with the convolutional & pooling layers.  G
 Moving from 32 to 64 filters again nearly doubled the time to do the fitting, for only a 0.3% increase in accuracy.
 
 Finally, I tried to combine the best aspects of previous test runs by using 256 neurons, 2x convolutional layers with 64 filters, 2x max-pooling layers, and a dropout rate of 20%.  This resulted in essentially the same accuracy as using the layers with 32 filters and only 128 neurons, but the longest time to fit at around 27 seconds per epoch.  For the submitted model, I went back to the version which used 32 filters and only 128 neurons because it offered essentially the best performance with the lowest time to fit.
+
+-------------------------------------------------------------------------------
+
+Despite completing the assignment with the model described above, it left me feeling distinctly unsatisfied.  I saw the numbers on the screen describe the accuracy, but the model still felt purely academic rather than a real prediction tool.  So, I decided I would use the saved model to try to predict the sign category of 'real' images.
+
+To test the saved model on 'real' images, I created a new file named traffic_predict.py which loads the saved model and uses the model.predict method to generate the highest-probability category for any input image.  To get 'real' images, I used Google Maps to virually walk around Munich and take screen grabs of any traffic signs that I could find.  I saved these images into a folder which was used as input to the model.predict method.
+
+I was also able to find a csv file online which translated the sign number categories into a description of the signs, and I used the cv2 library to generate a new image including the original image and text of the predicted category written on top.
+
+Finally, I used the cv2 library to create a mosaic image of all of the images fed into the model.predict method along with the model's prediction.  This was a much more satisfying result, where I could see a 'real' image, not part of the original data set, and how the model was able to interpret the image.
+
+![mosaic of signs] (mosaic.png 'traffic signs')
