@@ -81,15 +81,16 @@ def create_mosaic(image_list):
     final_bank = []
     # Group images into rows of MOSAIC_LENGTH
     for i in range(0, len(image_list), MOSAIC_LENGTH):
-        # Create horizontal row using hconcat function
+        # Create horizontal row by making list of image arrays
         h_row = [image['complete'] for image in image_list[i:i+MOSAIC_LENGTH]]
         # Add blank squares when the row has less than MOSAIC_LENGTH images
         while len(h_row) < MOSAIC_LENGTH:
             # Use numpy array of zeros to create blank images
             h_row.append(np.zeros((IMG_OUTPUT_WIDTH, IMG_OUTPUT_HEIGHT, 3),
                 dtype=np.uint8))
-        row = cv2.hconcat(h_row)
-        final_bank.append(row)
+
+        # Append horizontal row to final_bank
+        final_bank.append(cv2.hconcat(h_row))
 
     return cv2.vconcat(final_bank)
 
