@@ -37,4 +37,4 @@ I was also able to find a csv file online which translated the sign number categ
 
 Finally, I used the cv2 library to create a mosaic image of all of the images fed into the model.predict method along with the model's prediction.  This was a much more satisfying result, where I could see a 'real' image, not part of the original data set, and how the model was able to interpret the image.
 
-![mosaic of signs] (mosaic.png 'traffic signs')
+![mosaic of signs](mosaic.png 'traffic signs')
