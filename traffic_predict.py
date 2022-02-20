@@ -28,7 +28,7 @@ def load_descriptions(csv_file):
 
 
 def prep_images(directory):
-    """Read image into csv and resize to match training images."""
+    """Read images into list and resize to match training images."""
     
     images = []
 
@@ -126,7 +126,7 @@ def main():
     mosaic = create_mosaic(images)
 
     cv2.imshow('Images', mosaic)
-    k = cv2.waitKey(0)
+    cv2.waitKey(0)
 
 
 if __name__ == "__main__":
