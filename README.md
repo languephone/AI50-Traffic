@@ -31,7 +31,7 @@ Finally, I tried to combine the best aspects of previous test runs by using 256 
 
 Despite completing the assignment with the model described above, I felt unsatisfied.  The traffic.py file outputs an accuracy number, and I don't doubt that it is correct, but there was nothing to see at the end, and no tangible proof of that accuracy.  I wanted to use this saved model on 'real' images of traffic signs, not just those that were part of the data set.
 
-To test the saved model on 'real' images, I created a new file named traffic_predict.py which loads the saved model and uses the model.predict method to generate the highest-probability category for any input image.  To get 'real' images, I used Google Maps to virually walk around Munich and take screen grabs of any traffic signs that I could find.  I saved these images into a folder which was used as input to the model.predict method.
+To test the saved model on 'real' images, I created a new file named traffic_predict.py which loads the saved model and uses the model.predict method to generate the highest-probability category for any input image.  To get 'real' images, I used Google Maps to virtually walk around Munich and take screen grabs of any traffic signs that I could find.  I saved these images into a folder which was used as input to the model.predict method.
 
 I was also able to find a csv file online which translated the sign number categories into a description of the signs, and I used the cv2 library to place text of the predicted category on top of each image.
 
