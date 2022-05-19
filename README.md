@@ -5,7 +5,7 @@ For this project, I started by using the same layers as the handwriting.py file 
 * 1 Max-Pooling layer with a pool size of 2x2
 * 1 flattening layer
 * 1 dense hidden layer of 128 neurons
-* 1 dropout later with a rate of 50%
+* 1 dropout layer with a rate of 50%
 
 The results from this initial set of layers were abysmal: 5.3% accuracy.  I started playing around first with the dropout, bringing it down to 30%, and this had a dramatic effect on the model, immediately bringing the accuracy up to 92%.  Further changes to dropout had incrementally positive effects:
 * 50% dropout: 5.3% accuracy
