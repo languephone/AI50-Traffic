@@ -1,4 +1,6 @@
 ## Traffic
+Video demo: http://youtu.be/GW3eXxelXdc?si=rO3vp5ncGJA0pEta
+
 
 For this project, I started by using the same layers as the handwriting.py file from the lecture, which is to say:
 * 1 2D convolutional layer of 32 filters
